@@ -12,16 +12,29 @@ macro_rules! assert_render {
 #[test]
 fn char() {
     assert_render!('!', "!");
+    assert_render!('<', "&lt;");
+    assert_render!('>', "&gt;");
+    assert_render!('&', "&amp;");
+    assert_render!('"', "&quot;");
+    assert_render!('\'', "&apos;");
 }
 
 #[test]
 fn str() {
     assert_render!("oiblz", "oiblz");
+    assert_render!(
+        "<p>'\"bl&z\"'</p>",
+        "&lt;p&gt;&apos;&quot;bl&amp;z&quot;&apos;&lt;/p&gt;"
+    );
 }
 
 #[test]
 fn string() {
     assert_render!(String::from("oiblz"), "oiblz");
+    assert_render!(
+        String::from("<p>'\"bl&z\"'</p>"),
+        "&lt;p&gt;&apos;&quot;bl&amp;z&quot;&apos;&lt;/p&gt;"
+    );
 }
 
 #[test]

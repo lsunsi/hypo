@@ -4,19 +4,19 @@ pub trait Render {
 
 impl Render for char {
     fn render(&self, to: &mut String) {
-        to.push_str(&self.to_string());
+        crate::escape::char(*self, to);
     }
 }
 
 impl Render for &str {
     fn render(&self, to: &mut String) {
-        to.push_str(self);
+        crate::escape::str(self, to);
     }
 }
 
 impl Render for String {
     fn render(&self, to: &mut String) {
-        to.push_str(self);
+        crate::escape::str(self, to);
     }
 }
 
