@@ -1,6 +1,7 @@
 mod attribute;
 mod element;
 mod escape;
+mod r#macro;
 mod render;
 
 pub use attribute::Attributes;
