@@ -55,7 +55,7 @@ impl<R1: Render, R2: Render> Render for Result<R1, R2> {
 
 impl<R: Render> Render for &[R] {
     fn render(&self, to: &mut String) {
-        for r in self.iter() {
+        for r in *self {
             r.render(to);
         }
     }

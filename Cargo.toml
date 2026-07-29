@@ -21,3 +21,7 @@ itoap = { version = "1.0.1", default-features = false, features = ["alloc"], opt
 
 [dev-dependencies]
 maud = { version = "0.27.0", default-features = false }
+
+[lints.clippy]
+pedantic = "warn"
+nursery = "warn"
