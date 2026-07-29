@@ -3,6 +3,14 @@ name = "hypo"
 version = "0.1.0"
 edition = "2024"
 
+license = "MPL-2.0"
+categories = ["template-engine"]
+keywords = ["html", "markup", "template", "hypertext"]
+description = "tiny crate that renders html through macros"
+
+documentation = "https://docs.rs/hypo"
+repository = "https://github.com/lsunsi/hypo"
+
 [features]
 perf = ["dep:itoap"]
 kebab = ["dep:const-str"]
