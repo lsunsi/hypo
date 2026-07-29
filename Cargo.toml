@@ -3,7 +3,11 @@ name = "hypo"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+perf = ["dep:itoap"]
+
 [dependencies]
+itoap = { version = "1.0.1", default-features = false, features = ["alloc"], optional = true }
 
 [dev-dependencies]
 maud = { version = "0.27.0", default-features = false }

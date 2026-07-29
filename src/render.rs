@@ -24,6 +24,9 @@ macro_rules! impl_for_numbers {
     ($($number:ty)+) => {$(
         impl Render for $number {
             fn render(&self, to: &mut String) {
+                #[cfg(feature = "perf")]
+                itoap::write_to_string(to, *self);
+                #[cfg(not(feature = "perf"))]
                 to.push_str(&self.to_string());
             }
         }
