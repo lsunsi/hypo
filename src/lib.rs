@@ -9,3 +9,6 @@ pub use element::Element;
 pub use render::{Fn, Raw, Render};
 
 pub const DOCTYPE: Raw<&str> = Raw("<!DOCTYPE html>");
+
+#[cfg(feature = "kebab")]
+pub use const_str;

@@ -5,8 +5,10 @@ edition = "2024"
 
 [features]
 perf = ["dep:itoap"]
+kebab = ["dep:const-str"]
 
 [dependencies]
+const-str = { version = "1.0.0", default-features = false, optional = true }
 itoap = { version = "1.0.1", default-features = false, features = ["alloc"], optional = true }
 
 [dev-dependencies]

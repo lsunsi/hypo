@@ -39,3 +39,12 @@ fn attrs() {
         "<div id=\"idê\" disabled></div>"
     );
 }
+
+#[test]
+fn attr_kebab() {
+    #[cfg(feature = "kebab")]
+    let expected = "<div hx-get=\"/\"></div>";
+    #[cfg(not(feature = "kebab"))]
+    let expected = "<div hx_get=\"/\"></div>";
+    assert_render!(div!(hx_get = "/"), expected);
+}

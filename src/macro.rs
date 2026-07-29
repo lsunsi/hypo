@@ -1,11 +1,31 @@
 #[macro_export]
 macro_rules! render {
     ($el:ident => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
-        $crate::render!($el => ($($($tt)*)*) -> ((stringify!($key), $value, $($attrs)*)))
+        $crate::render!($el => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
     };
     ($el:ident => ($($child:expr),*) -> ($($attrs:tt)*)) => {
         $crate::Attributes($($attrs)*).render(&mut $el);
         $($crate::Render::render(&$child, &mut $el);)*
+    };
+}
+
+#[macro_export]
+#[cfg(not(feature = "kebab"))]
+macro_rules! key {
+    ($key:ident) => {
+        stringify!($key)
+    };
+}
+
+#[macro_export]
+#[cfg(feature = "kebab")]
+macro_rules! key {
+    ($key:ident) => {
+        $crate::const_str::replace!(
+            $crate::const_str::replace!(stringify!($key), "r#", ""),
+            "_",
+            "-"
+        )
     };
 }
 

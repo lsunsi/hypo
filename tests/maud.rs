@@ -141,13 +141,13 @@ fn elements_attributes_void() {
 fn elements_attributes_custom() {
     assert!(
         html! {
-            article data_index="12345" {
+            article dataindex="12345" {
                 h1 { "My blog" }
                 tag-cloud { "pinkie pie pony cute" }
             }
         },
         article!(
-            data_index = "12345",
+            dataindex = "12345",
             h1!("My blog"),
             element!("tag-cloud", false, "pinkie pie pony cute")
         )
