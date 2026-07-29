@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 mod attribute;
 mod element;
 mod escape;
@@ -8,6 +10,7 @@ pub use attribute::Attributes;
 pub use element::Element;
 pub use render::{Fn, Raw, Render};
 
+/// the canonical html doctype
 pub const DOCTYPE: Raw<&str> = Raw("<!DOCTYPE html>");
 
 #[cfg(feature = "kebab")]

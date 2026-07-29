@@ -1,3 +1,4 @@
+/// what can be rendered to html
 pub trait Render {
     fn render(&self, to: &mut String);
 }
@@ -97,6 +98,7 @@ macro_rules! impl_for_tuples {
 
 impl_for_tuples!(I H G F E D C B A);
 
+/// renders directly without any escaping
 pub struct Raw<T>(pub T);
 impl<T: AsRef<str>> Render for Raw<T> {
     fn render(&self, to: &mut String) {
@@ -104,6 +106,7 @@ impl<T: AsRef<str>> Render for Raw<T> {
     }
 }
 
+/// renders lazily delegating to a function
 pub struct Fn<F>(pub F);
 impl<F: std::ops::Fn(&mut String)> Render for Fn<F> {
     fn render(&self, to: &mut String) {

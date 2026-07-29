@@ -1,3 +1,4 @@
+#[doc(hidden)]
 pub struct Element<'a, const VOID: bool>(&'a mut String, &'static str);
 
 impl<'a, const VOID: bool> Element<'a, VOID> {

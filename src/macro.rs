@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 macro_rules! render {
     ($el:ident => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
@@ -9,6 +10,7 @@ macro_rules! render {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 #[cfg(not(feature = "kebab"))]
 macro_rules! key {
@@ -17,6 +19,7 @@ macro_rules! key {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 #[cfg(feature = "kebab")]
 macro_rules! key {
@@ -30,6 +33,7 @@ macro_rules! key {
 }
 
 #[macro_export]
+/// renders arbitrary element
 macro_rules! element {
     ($name:expr, $void:literal, $($tt:tt)*) => {
         $crate::Fn(move |s: &mut String| {

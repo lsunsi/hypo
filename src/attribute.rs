@@ -1,3 +1,4 @@
+#[doc(hidden)]
 pub struct Attributes<T>(pub T);
 
 impl<T: Attribute> Attributes<T> {
