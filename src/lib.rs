@@ -1,11 +1,11 @@
 #![doc = include_str!("../README.md")]
 
-mod attribute;
+mod attrs;
 mod escape;
 mod r#macro;
 mod render;
 
-pub use attribute::Attributes;
+pub use attrs::Attrs;
 pub use render::{Fn, Raw, Render};
 
 /// the canonical html doctype

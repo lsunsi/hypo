@@ -7,7 +7,7 @@ macro_rules! render {
     ($name:expr, $void:literal => ($($child:expr),*) -> ($($attrs:tt)*)) => {
         (
             $crate::Raw(concat!('<', $name)),
-            $crate::Attributes($($attrs)*),
+            $crate::Attrs($($attrs)*),
             ($($child),*),
             (!$void).then_some($crate::Raw(concat!("</", $name, '>')))
         )

@@ -1,24 +1,24 @@
 #[doc(hidden)]
-pub struct Attributes<T>(pub T);
+pub struct Attrs<T>(pub T);
 
-impl<T: Attribute> crate::Render for Attributes<T> {
+impl<T: Attr> crate::Render for Attrs<T> {
     fn render(&self, to: &mut String) {
         self.0.render(to);
         to.push('>');
     }
 }
 
-pub trait Attribute {
+pub trait Attr {
     fn render(&self, to: &mut String) -> &'static str;
 }
 
-impl Attribute for () {
+impl Attr for () {
     fn render(&self, _: &mut String) -> &'static str {
         ""
     }
 }
 
-impl<T: Attribute> Attribute for (&'static str, bool, T) {
+impl<T: Attr> Attr for (&'static str, bool, T) {
     fn render(&self, to: &mut String) -> &'static str {
         let (name, boolean, next) = self;
         let next = next.render(to);
@@ -34,7 +34,7 @@ impl<T: Attribute> Attribute for (&'static str, bool, T) {
     }
 }
 
-impl<T: Attribute, V: crate::Render> Attribute for (&'static str, V, T) {
+impl<T: Attr, V: crate::Render> Attr for (&'static str, V, T) {
     fn render(&self, to: &mut String) -> &'static str {
         let (name, value, next) = self;
         let next = next.render(to);
