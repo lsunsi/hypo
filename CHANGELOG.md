@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.1.1]
 - **Changed**: Replaced element list (maybe some got removed, or some got added)
 - **Changed**: Macros now yield tuples instead of fns
 - **Fixed**: Bug that prevented nesting interpolation deeply
