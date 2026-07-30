@@ -149,7 +149,7 @@ fn elements_attributes_custom() {
         article!(
             dataindex = "12345",
             h1!("My blog"),
-            element!("tag-cloud", false, "pinkie pie pony cute")
+            element!("tag-cloud", true, "pinkie pie pony cute")
         )
     );
 }
