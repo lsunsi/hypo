@@ -1,12 +1,16 @@
 #[doc(hidden)]
 #[macro_export]
 macro_rules! render {
-    ($el:ident => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
-        $crate::render!($el => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
+    ($name:expr, $void:literal => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
+        $crate::render!($name, $void => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
     };
-    ($el:ident => ($($child:expr),*) -> ($($attrs:tt)*)) => {
-        $crate::Attributes($($attrs)*).render(&mut $el);
-        $($crate::Render::render(&$child, &mut $el);)*
+    ($name:expr, $void:literal => ($($child:expr),*) -> ($($attrs:tt)*)) => {
+        (
+            $crate::Raw(concat!('<', $name)),
+            $crate::Attributes($($attrs)*),
+            ($($child),*),
+            (!$void).then_some($crate::Raw(concat!("</", $name, '>')))
+        )
     };
 }
 
@@ -36,10 +40,7 @@ macro_rules! key {
 /// renders arbitrary element
 macro_rules! element {
     ($name:expr, $void:literal, $($tt:tt)*) => {
-        $crate::Fn(move |s: &mut String| {
-            let mut el = $crate::Element::<$void>::open(s, $name);
-            $crate::render!(el => ($($tt)*) -> (()));
-        })
+        $crate::render!($name, $void => ($($tt)*) -> (()));
     };
 }
 

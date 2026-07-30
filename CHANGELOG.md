@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- **Changed**: Macros now yield tuples instead of fns
+- **Fixed**: Bug that prevented nesting interpolation deeply
 
 ## [0.1.0](https://github.com/lsunsi/hypotext/releases/tag/v0.1.0)
 - **Added**: Render, Element, Attributes, macro. In short, hypo.

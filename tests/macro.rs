@@ -43,8 +43,18 @@ fn attrs() {
 #[test]
 fn attr_kebab() {
     #[cfg(feature = "kebab")]
-    let expected = "<div hx-get=\"/\"></div>";
+    let expected = "<div type=\"tipo\" hx-get=\"/\"></div>";
     #[cfg(not(feature = "kebab"))]
-    let expected = "<div hx_get=\"/\"></div>";
-    assert_render!(div!(hx_get = "/"), expected);
+    let expected = "<div r#type=\"tipo\" hx_get=\"/\"></div>";
+    assert_render!(div!(r#type = "tipo", hx_get = "/"), expected);
+}
+
+#[test]
+fn partial_nested_attr() {
+    let partial = |text: String| div!(div!(text));
+
+    assert_render!(
+        partial(String::from("oiblz")),
+        "<div><div>oiblz</div></div>"
+    );
 }
