@@ -1,4 +1,4 @@
-use hypo::Attributes;
+use hypo::{Attributes, Render};
 
 #[test]
 fn single() {

@@ -1,29 +1,29 @@
 #[doc(hidden)]
 pub struct Attributes<T>(pub T);
 
-impl<T: Attribute> Attributes<T> {
-    pub fn render(self, to: &mut String) {
+impl<T: Attribute> crate::Render for Attributes<T> {
+    fn render(&self, to: &mut String) {
         self.0.render(to);
         to.push('>');
     }
 }
 
 pub trait Attribute {
-    fn render(self, to: &mut String) -> &'static str;
+    fn render(&self, to: &mut String) -> &'static str;
 }
 
 impl Attribute for () {
-    fn render(self, _: &mut String) -> &'static str {
+    fn render(&self, _: &mut String) -> &'static str {
         ""
     }
 }
 
 impl<T: Attribute> Attribute for (&'static str, bool, T) {
-    fn render(self, to: &mut String) -> &'static str {
+    fn render(&self, to: &mut String) -> &'static str {
         let (name, boolean, next) = self;
         let next = next.render(to);
-        if boolean {
-            if name != next {
+        if *boolean {
+            if *name != next {
                 to.push(' ');
                 to.push_str(name);
             }
@@ -35,11 +35,10 @@ impl<T: Attribute> Attribute for (&'static str, bool, T) {
 }
 
 impl<T: Attribute, V: crate::Render> Attribute for (&'static str, V, T) {
-    fn render(self, to: &mut String) -> &'static str {
+    fn render(&self, to: &mut String) -> &'static str {
         let (name, value, next) = self;
-
         let next = next.render(to);
-        if name == next {
+        if *name == next {
             to.pop();
             to.push(' ');
 
