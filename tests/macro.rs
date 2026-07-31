@@ -20,6 +20,11 @@ fn child() {
 }
 
 #[test]
+fn child_trailing() {
+    assert_render!(div!(div!(),), "<div><div></div></div>");
+}
+
+#[test]
 fn children() {
     assert_render!(
         div!(div!(div!()), div!()),
@@ -38,6 +43,11 @@ fn attrs() {
         div!(id = "idê", disabled = true),
         "<div id=\"idê\" disabled></div>"
     );
+}
+
+#[test]
+fn attr_trailing() {
+    assert_render!(div!(id = "idê",), "<div id=\"idê\"></div>");
 }
 
 #[test]

@@ -4,7 +4,7 @@ macro_rules! render {
     ($name:expr, $close:literal => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
         $crate::render!($name, $close => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
     };
-    ($name:expr, $close:literal => ($($child:expr),*) -> ($($attrs:tt)*)) => {
+    ($name:expr, $close:literal => ($($child:expr),*$(,)?) -> ($($attrs:tt)*)) => {
         (
             $crate::Raw(concat!('<', $name)),
             $crate::Attrs($($attrs)*),

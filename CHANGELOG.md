@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- **Added**: Tuples of up to 16 elements implement Render
+- **Added**: Trailing commas for children and attributes
 
 ## [0.1.1]
 - **Changed**: Replaced element list (maybe some got removed, or some got added)
