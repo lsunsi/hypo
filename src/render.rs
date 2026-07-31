@@ -96,7 +96,7 @@ macro_rules! impl_for_tuples {
     };
 }
 
-impl_for_tuples!(I H G F E D C B A);
+impl_for_tuples!(Q P O N M L K J I H G F E D C B A);
 
 /// renders directly without any escaping
 pub struct Raw<T>(pub T);
