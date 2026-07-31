@@ -1,4 +1,4 @@
-use hypo::{Render, div};
+use hypo::{Render, div, element};
 
 #[macro_export]
 macro_rules! assert_render {
@@ -67,4 +67,17 @@ fn partial_nested_attr() {
         partial(String::from("oiblz")),
         "<div><div>oiblz</div></div>"
     );
+}
+
+#[test]
+fn element_base() {
+    assert_render!(
+        element!("tag", id = "idê", div!()),
+        "<tag id=\"idê\"><div></div></tag>"
+    );
+}
+
+#[test]
+fn element_void() {
+    assert_render!(element!("tag" => void, id = "idê"), "<tag id=\"idê\">");
 }

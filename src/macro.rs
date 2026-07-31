@@ -1,16 +1,14 @@
 #[doc(hidden)]
 #[macro_export]
 macro_rules! render {
-    ($name:expr, $close:literal => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
-        $crate::render!($name, $close => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
+    ($open:expr, $($close:expr)? => ($key:ident = $value:expr$(, $($tt:tt)*)?) -> ($($attrs:tt)*)) => {
+        $crate::render!($open, $($close)* => ($($($tt)*)*) -> (($crate::key!($key), $value, $($attrs)*)))
     };
-    ($name:expr, $close:literal => ($($child:expr),*$(,)?) -> ($($attrs:tt)*)) => {
-        (
-            $crate::Raw(concat!('<', $name)),
-            $crate::Attrs($($attrs)*),
-            ($($child),*),
-            $close.then_some($crate::Raw(concat!("</", $name, '>')))
-        )
+    ($open:expr, $close:expr => ($($child:expr),*$(,)?) -> ($($attrs:tt)*)) => {
+        ($open, $crate::Attrs($($attrs)*), ($($child),*), $close)
+    };
+    ($open:expr, => () -> ($($attrs:tt)*)) => {
+        ($open, $crate::Attrs($($attrs)*))
     };
 }
 
@@ -39,19 +37,22 @@ macro_rules! key {
 #[macro_export]
 /// renders arbitrary element
 macro_rules! element {
-    ($name:expr, $void:literal, $($tt:tt)*) => {
-        $crate::render!($name, $void => ($($tt)*) -> (()));
+    ($name:expr, $($tt:tt)*) => {
+        $crate::render!($crate::Raw(concat!('<', $name)), $crate::Raw(concat!("</", $name, '>')) => ($($tt)*) -> (()));
+    };
+    ($name:expr => void, $($tt:tt)*) => {
+        $crate::render!($crate::Raw(concat!('<', $name)), => ($($tt)*) -> (()));
     };
 }
 
 macro_rules! elements {
-    ($dol:tt, $($name:ident $void:literal $doc:literal)+) => {
+    ($dol:tt, $($name:ident $(@$tag:tt)? $doc:literal,)+) => {
         $(
             #[doc = $doc]
             #[macro_export]
             macro_rules! $name {
                 ($dol($doltt:tt)*) => {
-                    $crate::element!(stringify!($name), $void, $dol($doltt)*)
+                    $crate::element!(stringify!($name)$(=> $tag)*, $dol($doltt)*)
                 };
             }
         )*
@@ -59,119 +60,119 @@ macro_rules! elements {
 }
 
 elements!($, // https://html.spec.whatwg.org/multipage/indices.html
-    a true "Hyperlink"
-    abbr true "Abbreviation"
-    address true "Contact information for a page or article element"
-    area false "Hyperlink or dead area on an image map"
-    article true "Self-contained syndicatable or reusable composition"
-    aside true "Sidebar for tangentially related content"
-    audio true "Audio player"
-    b true "Keywords"
-    base false "Base URL and default target navigable for hyperlinks and forms"
-    bdi true "Text directionality isolation"
-    bdo true "Text directionality formatting"
-    blockquote true "A section quoted from another source"
-    body true "Document body"
-    br false "Line break, e.g. in poem or postal address"
-    button true "Button control"
-    canvas true "Scriptable bitmap canvas"
-    caption true "Table caption"
-    cite true "Title of a work"
-    code true "Computer code"
-    col false "Table column"
-    colgroup true "Group of columns in a table"
-    data true "Machine-readable equivalent"
-    datalist true "Container for options for combo box control"
-    dd true "Content for corresponding dt element(s)"
-    del true "A removal from the document"
-    details true "Disclosure control for hiding details"
-    dfn true "Defining instance"
-    dialog true "Dialog box or window"
-    div true "Generic flow container, or container for name-value groups in dl elements"
-    dl true "Association list consisting of zero or more name-value groups"
-    dt true "Legend for corresponding dd element(s)"
-    em true "Stress emphasis"
-    embed false "Plugin"
-    fieldset true "Group of form controls"
-    figcaption true "Caption for figure"
-    figure true "Figure with optional caption"
-    footer true "Footer for a page or section"
-    form true "User-submittable form"
-    h1 true "Heading 1"
-    h2 true "Heading 2"
-    h3 true "Heading 3"
-    h4 true "Heading 4"
-    h5 true "Heading 5"
-    h6 true "Heading 6"
-    head true "Container for document metadata"
-    header true "Introductory or navigational aids for a page or section"
-    hgroup true "Heading container"
-    hr false "Thematic break"
-    html true "Root element"
-    i true "Alternate voice"
-    iframe true "Child navigable"
-    img false "Image"
-    input false "Form control"
-    ins true "An addition to the document"
-    kbd true "User input"
-    label true "Caption for a form control"
-    legend true "Caption for fieldset"
-    li true "List item"
-    link false "Link metadata"
-    main true "Container for the dominant contents of the document"
-    map true "Image map"
-    mark true "Highlight"
-    math true "mathml root"
-    menu true "Menu of commands"
-    meta false "Text metadata"
-    meter true "Gauge"
-    nav true "Section with navigational links"
-    noscript true "Fallback content for script"
-    object true "Image, child navigable, or plugin"
-    ol true "Ordered list"
-    optgroup true "Group of options in a list box"
-    option true "Option in a list box or combo box control"
-    output true "Calculated output value"
-    p true "Paragraph"
-    picture true "Image"
-    pre true "Block of preformatted text"
-    progress true "Progress bar"
-    q true "Quotation"
-    rp true "Parenthesis for ruby annotation text"
-    rt true "Ruby annotation text"
-    ruby true "Ruby annotation(s)"
-    s true "Inaccurate text"
-    samp true "Computer output"
-    script true "Embedded script"
-    search true "Container for search controls"
-    section true "Generic document or application section"
-    select true "List box control"
-    selectedcontent true "Mirrors content from an option"
-    slot true "Shadow tree slot"
-    small true "Side comment"
-    source false "Image source for img or media source for video or audio"
-    span true "Generic phrasing container"
-    strong true "Importance"
-    style true "Embedded styling information"
-    sub true "Subscript"
-    summary true "Caption for details"
-    sup true "Superscript"
-    svg true "svg root"
-    table true "Table"
-    tbody true "Group of rows in a table"
-    td true "Table cell"
-    template true "Template"
-    textarea true "Multiline text controls"
-    tfoot true "Group of footer rows in a table"
-    th true "Table header cell"
-    thead true "Group of heading rows in a table"
-    time true "Machine-readable equivalent of date- or time-related data"
-    title true "Document title"
-    tr true "Table row"
-    track false "Timed text track"
-    u true "Unarticulated annotation"
-    ul true "List"
-    var true "Variable"
-    video true "Video player"
-    wbr false "Line breaking opportunity"
+    a "Hyperlink",
+    abbr "Abbreviation",
+    address "Contact information for a page or article element",
+    area @void "Hyperlink or dead area on an image map",
+    article "Self-contained syndicatable or reusable composition",
+    aside "Sidebar for tangentially related content",
+    audio "Audio player",
+    b "Keywords",
+    base @void "Base URL and default target navigable for hyperlinks and forms",
+    bdi "Text directionality isolation",
+    bdo "Text directionality formatting",
+    blockquote "A section quoted from another source",
+    body "Document body",
+    br @void "Line break, e.g. in poem or postal address",
+    button "Button control",
+    canvas "Scriptable bitmap canvas",
+    caption "Table caption",
+    cite "Title of a work",
+    code "Computer code",
+    col "Table column",
+    colgroup "Group of columns in a table",
+    data "Machine-readable equivalent",
+    datalist "Container for options for combo box control",
+    dd "Content for corresponding dt element(s)",
+    del "A removal from the document",
+    details "Disclosure control for hiding details",
+    dfn "Defining instance",
+    dialog "Dialog box or window",
+    div "Generic flow container, or container for name-value groups in dl elements",
+    dl "Association list consisting of zero or more name-value groups",
+    dt "Legend for corresponding dd element(s)",
+    em "Stress emphasis",
+    embed @void "Plugin",
+    fieldset "Group of form controls",
+    figcaption "Caption for figure",
+    figure "Figure with optional caption",
+    footer "Footer for a page or section",
+    form "User-submittable form",
+    h1 "Heading 1",
+    h2 "Heading 2",
+    h3 "Heading 3",
+    h4 "Heading 4",
+    h5 "Heading 5",
+    h6 "Heading 6",
+    head "Container for document metadata",
+    header "Introductory or navigational aids for a page or section",
+    hgroup "Heading container",
+    hr @void "Thematic break",
+    html "Root element",
+    i "Alternate voice",
+    iframe "Child navigable",
+    img @void "Image",
+    input @void "Form control",
+    ins "An addition to the document",
+    kbd "User input",
+    label "Caption for a form control",
+    legend "Caption for fieldset",
+    li "List item",
+    link @void "Link metadata",
+    main "Container for the dominant contents of the document",
+    map "Image map",
+    mark "Highlight",
+    math "mathml root",
+    menu "Menu of commands",
+    meta @void "Text metadata",
+    meter "Gauge",
+    nav "Section with navigational links",
+    noscript "Fallback content for script",
+    object "Image, child navigable, or plugin",
+    ol "Ordered list",
+    optgroup "Group of options in a list box",
+    option "Option in a list box or combo box control",
+    output "Calculated output value",
+    p "Paragraph",
+    picture "Image",
+    pre "Block of preformatted text",
+    progress "Progress bar",
+    q "Quotation",
+    rp "Parenthesis for ruby annotation text",
+    rt "Ruby annotation text",
+    ruby "Ruby annotation(s)",
+    s "Inaccurate text",
+    samp "Computer output",
+    script "Embedded script",
+    search "Container for search controls",
+    section "Generic document or application section",
+    select "List box control",
+    selectedcontent "Mirrors content from an option",
+    slot "Shadow tree slot",
+    small "Side comment",
+    source @void "Image source for img or media source for video or audio",
+    span "Generic phrasing container",
+    strong "Importance",
+    style "Embedded styling information",
+    sub "Subscript",
+    summary "Caption for details",
+    sup "Superscript",
+    svg "svg root",
+    table "Table",
+    tbody "Group of rows in a table",
+    td "Table cell",
+    template "Template",
+    textarea "Multiline text controls",
+    tfoot "Group of footer rows in a table",
+    th "Table header cell",
+    thead "Group of heading rows in a table",
+    time "Machine-readable equivalent of date- or time-related data",
+    title "Document title",
+    tr "Table row",
+    track @void "Timed text track",
+    u "Unarticulated annotation",
+    ul "List",
+    var "Variable",
+    video "Video player",
+    wbr @void "Line breaking opportunity",
 );
