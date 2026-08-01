@@ -69,6 +69,14 @@ impl<R: Render> Render for Vec<R> {
     }
 }
 
+impl<R: Render, I: Iterator, F: FnMut(I::Item) -> R> Render for std::iter::Map<I, F> {
+    fn render(self, to: &mut String) {
+        for r in self {
+            r.render(to);
+        }
+    }
+}
+
 macro_rules! impl_for_tuples {
     ($head:ident) => {
         impl Render for () {

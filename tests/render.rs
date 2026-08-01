@@ -75,6 +75,11 @@ fn vec() {
 }
 
 #[test]
+fn map() {
+    assert_render!((0..3).map(|i| i + 1), "123");
+}
+
+#[test]
 fn tuples() {
     assert_render!((), "");
     assert_render!(("0",), "0");

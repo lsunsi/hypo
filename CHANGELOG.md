@@ -4,6 +4,7 @@
 - **Added**: Tuples of up to 16 elements implement Render
 - **Added**: Trailing commas for children and attributes
 - **Added**: Render Fn takes FnMut now (because it's broader)
+- **Added**: Render trait implemented for std::iter::Map
 - **Changed**: Void elements now won't compile with children
 - **Changed**: Element macro now defaults to non-void
 - **Changed**: Render trait takes ownership instead of borrow
