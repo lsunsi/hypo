@@ -1,6 +1,5 @@
 use hypo::{Render, div, element};
 
-#[macro_export]
 macro_rules! assert_render {
     ($hypo:expr, $ex:expr) => {{
         let mut s = String::new();
