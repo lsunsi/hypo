@@ -40,6 +40,38 @@ let page = html!(
 # assert_eq!(s, r#"<html><head><meta charset="UTF-8"><title>hypotext</title></head><body class="container">leads to hypertext</body></html>"#);
 ```
 
+## Control flow
+This crate does not provide any syntax for control flow primitives.
+
+It prioritize native structs that implement `Render` so the user can use it's combinatory methods and primitives to achieve some interesting control flow results.
+
+```rust
+# use hypo::*;
+let section = |header: Option<&'static str>, rows: Vec<&'static str>| {
+    section!(
+        // if-let adjacent
+        header.map(|h| h1!(('¡', h, '!'))),
+        
+        // if adjacent
+        (!rows.is_empty()).then_some(
+            // for adjacent
+            ul!(rows.into_iter().map(|row| li!(row)))
+        )
+        // else adjacent
+        .ok_or("no rows")
+    )
+};
+# let mut s = String::new();
+# section(None, Vec::new()).render(&mut s);
+# assert_eq!(s, r#"<section>no rows</section>"#);
+# let mut s = String::new();
+# section(Some("oiblz"), Vec::new()).render(&mut s);
+# assert_eq!(s, r#"<section><h1>¡oiblz!</h1>no rows</section>"#);
+# let mut s = String::new();
+# section(None, vec!["oi", "blz"]).render(&mut s);
+# assert_eq!(s, r#"<section><ul><li>oi</li><li>blz</li></ul></section>"#);
+```
+
 ## Feature flags
 No features are enabled by default, which means this crate does not carry any dependencies. But hear me out...
 
