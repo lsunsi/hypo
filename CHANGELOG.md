@@ -3,8 +3,11 @@
 ## [Unreleased]
 - **Added**: Tuples of up to 16 elements implement Render
 - **Added**: Trailing commas for children and attributes
+- **Added**: Render Fn takes FnMut now (because it's broader)
 - **Changed**: Void elements now won't compile with children
 - **Changed**: Element macro now defaults to non-void
+- **Changed**: Render trait takes ownership instead of borrow
+- **Removed**: Render trait no longer implemented for slice
 
 ## [0.1.1]
 - **Changed**: Replaced element list (maybe some got removed, or some got added)

@@ -65,11 +65,6 @@ fn result() {
 }
 
 #[test]
-fn slice() {
-    assert_render!(&["oi", "blz"] as &[_], "oiblz");
-}
-
-#[test]
 fn array() {
     assert_render!(["oi", "blz"], "oiblz");
 }

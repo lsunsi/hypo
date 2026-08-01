@@ -387,39 +387,42 @@ fn control_structures_if() {
         Luna,
     }
 
-    let user = Princess::Celestia;
-
-    let maud = html! {
-        @if user == Princess::Luna {
-            h1 { "Super secret woona to-do list" }
-            ul {
-                li { "Nuke the Crystal Empire" }
-                li { "Kick a puppy" }
-                li { "Evil laugh" }
+    let maud = |user: Princess| {
+        html! {
+            @if user == Princess::Luna {
+                h1 { "Super secret woona to-do list" }
+                ul {
+                    li { "Nuke the Crystal Empire" }
+                    li { "Kick a puppy" }
+                    li { "Evil laugh" }
+                }
+            } @else if user == Princess::Celestia {
+                p { "Sister, please stop reading my diary. Its rude." }
+            } @else {
+                p { "Nothing to see here; move along." }
             }
-        } @else if user == Princess::Celestia {
-            p { "Sister, please stop reading my diary. Its rude." }
-        } @else {
-            p { "Nothing to see here; move along." }
         }
     };
 
-    let hypo: Box<dyn Render> = if user == Princess::Luna {
-        Box::new((
-            h1!("Super secret woona to-do list"),
-            ul!(
-                li!("Nuke the Crystal Empire"),
-                li!("Kick a puppy"),
-                li!("Evil laugh")
-            ),
-        ))
-    } else if user == Princess::Celestia {
-        Box::new(p!("Sister, please stop reading my diary. Its rude."))
-    } else {
-        Box::new(p!("Nothing to see here; move along."))
+    let hypo = |user: Princess| {
+        matches!(user, Princess::Luna)
+            .then_some((
+                h1!("Super secret woona to-do list"),
+                ul!(
+                    li!("Nuke the Crystal Empire"),
+                    li!("Kick a puppy"),
+                    li!("Evil laugh")
+                ),
+            ))
+            .ok_or(
+                matches!(user, Princess::Celestia)
+                    .then_some(p!("Sister, please stop reading my diary. Its rude."))
+                    .ok_or(p!("Nothing to see here; move along.")),
+            )
     };
 
-    assert!(maud, hypo);
+    assert!(maud(Princess::Celestia), hypo(Princess::Celestia));
+    assert!(maud(Princess::Luna), hypo(Princess::Luna));
 }
 
 #[test]
@@ -505,41 +508,49 @@ fn control_structures_match() {
     #[allow(dead_code, reason = "maud has it")]
     enum Princess {
         Celestia,
-        Luna,
         Cadance,
+        Luna,
     }
-    let user = Princess::Celestia;
-    let maud = html! {
-        @match user {
-            Princess::Luna => {
-                h1 { "Super secret woona to-do list" }
-                ul {
-                    li { "Nuke the Crystal Empire" }
-                    li { "Kick a puppy" }
-                    li { "Evil laugh" }
-                }
-            },
-            Princess::Celestia => {
-                p { "Sister, please stop reading my diary. Its rude." }
-            },
-            _ => p { "Nothing to see here; move along." }
+
+    let maud = |user: Princess| {
+        html! {
+            @match user {
+                Princess::Luna => {
+                    h1 { "Super secret woona to-do list" }
+                    ul {
+                        li { "Nuke the Crystal Empire" }
+                        li { "Kick a puppy" }
+                        li { "Evil laugh" }
+                    }
+                },
+                Princess::Celestia => {
+                    p { "Sister, please stop reading my diary. Its rude." }
+                },
+                _ => p { "Nothing to see here; move along." }
+            }
         }
     };
 
-    let hypo: Box<dyn Render> = match user {
-        Princess::Luna => Box::new((
-            h1!("Super secret woona to-do list"),
-            ul!(
-                li!("Nuke the Crystal Empire"),
-                li!("Kick a puppy"),
-                li!("Evil laugh")
-            ),
-        )),
-        Princess::Celestia => Box::new(p!("Sister, please stop reading my diary. Its rude.")),
-        _ => Box::new(p!("Nothing to see here; move along.")),
+    let hypo = |user: Princess| {
+        matches!(user, Princess::Luna)
+            .then_some((
+                h1!("Super secret woona to-do list"),
+                ul!(
+                    li!("Nuke the Crystal Empire"),
+                    li!("Kick a puppy"),
+                    li!("Evil laugh")
+                ),
+            ))
+            .ok_or(
+                matches!(user, Princess::Celestia)
+                    .then_some(p!("Sister, please stop reading my diary. Its rude."))
+                    .ok_or(p!("Nothing to see here; move along.")),
+            )
     };
 
-    assert!(maud, hypo);
+    assert!(maud(Princess::Celestia), hypo(Princess::Celestia));
+    assert!(maud(Princess::Cadance), hypo(Princess::Cadance));
+    assert!(maud(Princess::Luna), hypo(Princess::Luna));
 }
 
 #[test]
