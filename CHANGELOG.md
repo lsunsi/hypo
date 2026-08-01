@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.0]
 - **Added**: Tuples of up to 16 elements implement Render
 - **Added**: Trailing commas for children and attributes
 - **Added**: Render Fn takes FnMut now (because it's broader)
