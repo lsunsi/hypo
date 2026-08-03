@@ -89,6 +89,48 @@ let section = |header: Option<&'static str>, rows: Vec<&'static str>| {
 # assert_eq!(s, r#"<section><ul><li>oi</li><li>blz</li></ul></section>"#);
 ```
 
+## Note on attributes
+This crate design takes special care to support some common cases on real world situations. At this point in the documentation, you already know everything you need to figure this out yourself, but I'll mention three examples that might not be that obvious at first glance.
+
+```rust
+# use hypo::*;
+# let mut s = String::new();
+// Some renders attribute normally
+input!(value = Some("oiblz")).render(&mut s);
+assert_eq!(s, r#"<input value="oiblz">"#);
+# s.clear();
+// None means nothing gets rendered and even attribute key is taken out
+input!(value = None::<&str>).render(&mut s);
+assert_eq!(s, r#"<input>"#);
+```
+```rust
+# use hypo::*;
+# let mut s = String::new();
+let path = "/about";
+a!(href = ("https://oiblz", path)).render(&mut s);
+// tuple concatenates, so it works for interpolation without allocation
+assert_eq!(s, r#"<a href="https://oiblz/about"></a>"#);
+```
+```rust
+# use hypo::*;
+# let mut s = String::new();
+// boolean values are for boolean attributes
+select!(checked = true).render(&mut s);
+assert_eq!(s, r#"<select checked></select>"#);
+# s.clear();
+// false omits the attribute, true places it without value
+select!(checked = false).render(&mut s);
+assert_eq!(s, r#"<select></select>"#);
+```
+```rust
+# use hypo::*;
+# let mut s = String::new();
+// consecutive attribute keys means join with space
+button!(class = "bg-red", class = true.then_some("warning")).render(&mut s);
+// so in this case you can have a class always present, while another is optional
+assert_eq!(s, r#"<button class="bg-red warning"></button>"#);
+```
+
 ## Feature flags
 No features are enabled by default, which means this crate does not carry any dependencies. But hear me out...
 
