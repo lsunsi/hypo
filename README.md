@@ -40,6 +40,23 @@ let page = html!(
 # assert_eq!(s, r#"<html><head><meta charset="UTF-8"><title>hypotext</title></head><body class="container">leads to hypertext</body></html>"#);
 ```
 
+## Render trait
+The `Render` trait is the bedrock of this library. Every value interpolated into the markup needs to implement it.
+
+The interpolation happens basically in two places:
+- **Children** of elements `div!(children)`
+- **Value** of attributes `div!(key = value)`
+
+In order to understand this crate design, it's important to keep in mind the types that implement this trait. Here's a quick list of the most important ones and their behavior.
+
+- `char`, `&str` and `String` (implies escaping)
+- `Raw` (defined in this library, string that skips escaping)
+- all integer types (implies allocation without `perf` feature)
+- `Vec`, `array` and `Map` (concatenation of items)
+- tuples (size up to 16, concatenation too)
+- `Option` (renders nothing on None)
+- `Result` (just renders both sides)
+
 ## Control flow
 This crate does not provide any syntax for control flow primitives.
 
