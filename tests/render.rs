@@ -103,9 +103,3 @@ fn raw() {
     use hypo::Raw;
     assert_render!(Raw("<p>oiblz</p>"), "<p>oiblz</p>");
 }
-
-#[test]
-fn r#fn() {
-    use hypo::Fn;
-    assert_render!(Fn(|s: &mut String| s.push_str("oiblz")), "oiblz");
-}

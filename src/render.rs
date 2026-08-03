@@ -105,11 +105,3 @@ impl<T: AsRef<str>> Render for Raw<T> {
         to.push_str(self.0.as_ref());
     }
 }
-
-/// renders lazily delegating to a function
-pub struct Fn<F>(pub F);
-impl<F: std::ops::FnMut(&mut String)> Render for Fn<F> {
-    fn render(mut self, to: &mut String) {
-        self.0(to);
-    }
-}

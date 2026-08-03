@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- **Removed**: Fn struct implementing Render is gone
 
 ## [0.2.0]
 - **Added**: Tuples of up to 16 elements implement Render
