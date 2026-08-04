@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- **Added**: Helper function render, turning Render into Raw
 - **Removed**: Fn struct implementing Render is gone
 
 ## [0.2.0]

@@ -35,9 +35,7 @@ let page = html!(
         "leads to hypertext"
     )
 );
-# let mut s = String::new();
-# page.render(&mut s);
-# assert_eq!(s, r#"<html><head><meta charset="UTF-8"><title>hypotext</title></head><body class="container">leads to hypertext</body></html>"#);
+# assert_eq!(render(page).0, r#"<html><head><meta charset="UTF-8"><title>hypotext</title></head><body class="container">leads to hypertext</body></html>"#);
 ```
 
 ## Render trait
@@ -78,15 +76,9 @@ let section = |header: Option<&'static str>, rows: Vec<&'static str>| {
         .ok_or("no rows")
     )
 };
-# let mut s = String::new();
-# section(None, Vec::new()).render(&mut s);
-# assert_eq!(s, r#"<section>no rows</section>"#);
-# let mut s = String::new();
-# section(Some("oiblz"), Vec::new()).render(&mut s);
-# assert_eq!(s, r#"<section><h1>¡oiblz!</h1>no rows</section>"#);
-# let mut s = String::new();
-# section(None, vec!["oi", "blz"]).render(&mut s);
-# assert_eq!(s, r#"<section><ul><li>oi</li><li>blz</li></ul></section>"#);
+# assert_eq!(render(section(None, Vec::new())).0, r#"<section>no rows</section>"#);
+# assert_eq!(render(section(Some("oiblz"), Vec::new())).0, r#"<section><h1>¡oiblz!</h1>no rows</section>"#);
+# assert_eq!(render(section(None, vec!["oi", "blz"])).0, r#"<section><ul><li>oi</li><li>blz</li></ul></section>"#);
 ```
 
 ## Note on attributes

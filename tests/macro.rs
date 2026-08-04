@@ -1,10 +1,8 @@
-use hypo::{Render, div, element};
+use hypo::{div, element};
 
 macro_rules! assert_render {
     ($hypo:expr, $ex:expr) => {{
-        let mut s = String::new();
-        $hypo.render(&mut s);
-        assert_eq!(s, $ex);
+        assert_eq!(hypo::render($hypo).0, $ex);
     }};
 }
 

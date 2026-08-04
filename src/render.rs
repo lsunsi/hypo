@@ -105,3 +105,10 @@ impl<T: AsRef<str>> Render for Raw<T> {
         to.push_str(self.0.as_ref());
     }
 }
+
+/// render template into a raw string
+pub fn render(r: impl Render) -> Raw<String> {
+    let mut s = String::new();
+    r.render(&mut s);
+    Raw(s)
+}

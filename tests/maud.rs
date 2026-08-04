@@ -3,9 +3,7 @@ use maud::html;
 
 macro_rules! assert {
     ($maud:expr, $hypo:expr) => {{
-        let mut s = String::new();
-        $hypo.render(&mut s);
-        assert_eq!($maud.0, s);
+        assert_eq!($maud.0, render($hypo).0);
     }};
 }
 
