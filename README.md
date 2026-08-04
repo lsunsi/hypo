@@ -126,9 +126,12 @@ assert_eq!(s, r#"<button class="bg-red warning"></button>"#);
 ## Feature flags
 No features are enabled by default, which means this crate does not carry any dependencies. But hear me out...
 
+- **axum**: The `Raw` struct now implements `axum::response::IntoResponse`, which means it can be directly returned from route functions like magic.
+
 - **kebab**: Attributes will have the underline (_) replaced by a dash (-) in compile time. This is useful for cleanly adding an `hx-get` for example, for no runtime cost.
 
 - **perf**: The Render implementation for numbers won't use Display, instead leveraging a performance oriented library. This might give you a rendering performance boost if you have lots of numbers.
+
 
 ## Versus
 

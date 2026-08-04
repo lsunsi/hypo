@@ -5,6 +5,9 @@ mod escape;
 mod r#macro;
 mod render;
 
+#[cfg(feature = "axum")]
+mod axum;
+
 pub use attrs::Attrs;
 pub use render::{Raw, Render, render};
 

@@ -12,10 +12,12 @@ documentation = "https://docs.rs/hypo"
 repository = "https://github.com/lsunsi/hypo"
 
 [features]
+axum = ["dep:axum"]
 perf = ["dep:itoap"]
 kebab = ["dep:const-str"]
 
 [dependencies]
+axum = { version = "0.8.0", default-features = false, optional = true }
 const-str = { version = "1.0.0", default-features = false, optional = true }
 itoap = { version = "1.0.1", default-features = false, features = ["alloc"], optional = true }
 

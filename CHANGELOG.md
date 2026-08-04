@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 - **Added**: Helper function render, turning Render into Raw
+- **Added**: Axum integration via Raw -> IntoResponse 
 - **Removed**: Fn struct implementing Render is gone
 
 ## [0.2.0]

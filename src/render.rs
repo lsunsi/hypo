@@ -99,7 +99,7 @@ macro_rules! impl_for_tuples {
 impl_for_tuples!(Q P O N M L K J I H G F E D C B A);
 
 /// renders directly without any escaping
-pub struct Raw<T>(pub T);
+pub struct Raw<T = String>(pub T);
 impl<T: AsRef<str>> Render for Raw<T> {
     fn render(self, to: &mut String) {
         to.push_str(self.0.as_ref());
@@ -107,7 +107,7 @@ impl<T: AsRef<str>> Render for Raw<T> {
 }
 
 /// render template into a raw string
-pub fn render(r: impl Render) -> Raw<String> {
+pub fn render(r: impl Render) -> Raw {
     let mut s = String::new();
     r.render(&mut s);
     Raw(s)
