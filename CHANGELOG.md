@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.1]
 - **Added**: Helper function render, turning Render into Raw
 - **Added**: Axum integration via Raw -> IntoResponse 
 - **Removed**: Fn struct implementing Render is gone
