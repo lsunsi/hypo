@@ -28,14 +28,14 @@ use hypo::*;
 let page = html!(
     head!(
         meta!(charset = "UTF-8"),
-        title!("hypotext")
+        title!("hypo")
     ),
     body!(
         class = "container",
         "leads to hypertext"
     )
 );
-# assert_eq!(render(page).0, r#"<html><head><meta charset="UTF-8"><title>hypotext</title></head><body class="container">leads to hypertext</body></html>"#);
+# assert_eq!(render(page).0, r#"<html><head><meta charset="UTF-8"><title>hypo</title></head><body class="container">leads to hypertext</body></html>"#);
 ```
 
 ## Render trait
@@ -136,19 +136,19 @@ No features are enabled by default, which means this crate does not carry any de
 ## Versus
 
 - [vy](https://github.com/JonahLund/vy), the main inspiration of this library.
-  - Hypotext has syntax that allows for conditional attributes and classes, without giving up formatting.
-  - Hypotext has no procedural macros, even with all features enabled.
-  - I'd pick hypotext over it because it's simpler and more powerful.
+  - Hypo has syntax that allows for conditional attributes and classes, without giving up formatting.
+  - Hypo has no procedural macros, even with all features enabled.
+  - I'd pick hypo over it because it's simpler and more powerful.
 
 - [maud](https://github.com/lambda-fairy/maud), de facto compiled html macro dsl.
-  - Hypotext has way less dsl, which could work as a pro or a con.
-  - Hypotext has no procedural macros, even with all features enabled.
-  - Hypotext does not allocate intermediary containers.
+  - Hypo has way less dsl, which could work as a pro or a con.
+  - Hypo has no procedural macros, even with all features enabled.
+  - Hypo does not allocate intermediary containers.
   - I'd pick maud if you prefer it's dsl.
 
 - [askama](https://github.com/askama-rs/askama), actual html templates jinja style.
-  - Hypotext has a simpler syntax for composition (just functions).
-  - Hypotext will avoid the html change of context, which could work as a pro or con.
+  - Hypo has a simpler syntax for composition (just functions).
+  - Hypo will avoid the html change of context, which could work as a pro or con.
   - I'd pick askama if you want to have raw html files.
 
 ###### Thanks for reading all of this.
