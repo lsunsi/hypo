@@ -2,16 +2,16 @@
 
 ## [Unreleased]
 
-## [0.2.2]
+## [0.2.2](https://github.com/lsunsi/hypo/compare/v0.2.1...v0.2.2)
 - **Added**: Implement Render for &String for ease of use
 - **Fixed**: Documentation typo mentioning hypotext
 
-## [0.2.1]
+## [0.2.1](https://github.com/lsunsi/hypo/compare/v0.2.0...v0.2.1)
 - **Added**: Helper function render, turning Render into Raw
 - **Added**: Axum integration via Raw -> IntoResponse 
 - **Removed**: Fn struct implementing Render is gone
 
-## [0.2.0]
+## [0.2.0](https://github.com/lsunsi/hypo/compare/v0.1.1...v0.2.0)
 - **Added**: Tuples of up to 16 elements implement Render
 - **Added**: Trailing commas for children and attributes
 - **Added**: Render Fn takes FnMut now (because it's broader)
@@ -21,7 +21,7 @@
 - **Changed**: Render trait takes ownership instead of borrow
 - **Removed**: Render trait no longer implemented for slice
 
-## [0.1.1]
+## [0.1.1](https://github.com/lsunsi/hypo/compare/v0.1.0...v0.1.1)
 - **Changed**: Replaced element list (maybe some got removed, or some got added)
 - **Changed**: Macros now yield tuples instead of fns
 - **Fixed**: Bug that prevented nesting interpolation deeply
