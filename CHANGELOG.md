@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- **Added**: Implement Render for &String for ease of use
+- **Fixed**: Documentation typo mentioning hypotext
 
 ## [0.2.1]
 - **Added**: Helper function render, turning Render into Raw

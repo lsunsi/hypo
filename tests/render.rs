@@ -24,6 +24,15 @@ fn str() {
 }
 
 #[test]
+fn borrow_string() {
+    assert_render!(&String::from("oiblz"), "oiblz");
+    assert_render!(
+        &String::from("<p>'\"bl&z\"'</p>"),
+        "&lt;p&gt;&apos;&quot;bl&amp;z&quot;&apos;&lt;/p&gt;"
+    );
+}
+
+#[test]
 fn string() {
     assert_render!(String::from("oiblz"), "oiblz");
     assert_render!(

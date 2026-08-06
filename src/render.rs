@@ -15,6 +15,12 @@ impl Render for &str {
     }
 }
 
+impl Render for &String {
+    fn render(self, to: &mut String) {
+        crate::escape::str(self, to);
+    }
+}
+
 impl Render for String {
     fn render(self, to: &mut String) {
         crate::escape::str(&self, to);
