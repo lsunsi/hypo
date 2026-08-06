@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.2.2]
 - **Added**: Implement Render for &String for ease of use
 - **Fixed**: Documentation typo mentioning hypotext
 
