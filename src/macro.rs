@@ -38,10 +38,10 @@ macro_rules! key {
 /// renders arbitrary element
 macro_rules! element {
     ($name:expr, $($tt:tt)*) => {
-        $crate::render!($crate::Raw(concat!('<', $name)), $crate::Raw(concat!("</", $name, '>')) => ($($tt)*) -> (()));
+        $crate::render!($crate::Raw(concat!('<', $name)), $crate::Raw(concat!("</", $name, '>')) => ($($tt)*) -> (()))
     };
     ($name:expr => void, $($tt:tt)*) => {
-        $crate::render!($crate::Raw(concat!('<', $name)), => ($($tt)*) -> (()));
+        $crate::render!($crate::Raw(concat!('<', $name)), => ($($tt)*) -> (()))
     };
 }
 
