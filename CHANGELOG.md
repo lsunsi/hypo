@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [0.2.3](https://github.com/lsunsi/hypo/compare/v0.2.2...v0.2.3)
+- **Fixed**: No semicolon from macro bodies according to rust
+
 ## [0.2.2](https://github.com/lsunsi/hypo/compare/v0.2.1...v0.2.2)
 - **Added**: Implement Render for &String for ease of use
 - **Fixed**: Documentation typo mentioning hypotext
